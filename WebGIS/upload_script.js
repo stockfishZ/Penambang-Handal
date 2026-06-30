@@ -14,24 +14,24 @@ document.addEventListener("DOMContentLoaded", function() {
     const processBtn = document.getElementById('process-btn');
 
     // Data Dictionary based on TOR
+    // Data Dictionary perfectly correlated to dashboard requirements
     const systemRules = {
-        eksplorasi: {
+        geo_prospectivity: {
             purposes: [
-                { id: "remote_sensing", label: "Remote Sensing / DEM", exts: [".tif", ".tiff"] },
-                { id: "geochemistry", label: "Geochemical Assay / Logging", exts: [".csv", ".xlsx"] },
-                { id: "boundaries", label: "Prospectivity Boundaries", exts: [".shp", ".geojson"] }
+                { id: "geo_raster", label: "Raw Georaster Map", exts: [".tif", ".tiff"] },
+                { id: "drill_metrics", label: "Drill Indices & Lithology Stats", exts: [".csv", ".json"] }
             ]
         },
-        penambangan: {
+        operational_logistics: {
             purposes: [
-                { id: "dispatch", label: "Equipment Dispatch & Cycle Time", exts: [".csv", ".json"] },
-                { id: "geotech", label: "Geotechnical / Slope Monitoring", exts: [".csv", ".dxf"] }
+                { id: "logistics_dist", label: "Access Distances (Road, River, BTS)", exts: [".csv", ".json"] },
+                { id: "cut_fill", label: "Cut/Fill & Coverage Estimations", exts: [".csv", ".json"] }
             ]
         },
-        pengolahan: {
+        esg_k3: {
             purposes: [
-                { id: "metallurgy", label: "Metallurgical Lab Tests", exts: [".csv", ".xlsx"] },
-                { id: "mass_balance", label: "Flowsheet Mass Balance", exts: [".csv"] }
+                { id: "forestry_bounds", label: "Kawasan Hutan Spatial Boundaries", exts: [".shp", ".geojson"] },
+                { id: "hazard_metrics", label: "Hazards (Longsor, Banjir, Evakuasi)", exts: [".csv", ".json"] }
             ]
         }
     };
