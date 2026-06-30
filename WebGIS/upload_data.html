@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoNiRisk - Data Ingestion</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="geo_styles.css">
+</head>
+<body class="bg-[#F8F9FA] font-sans text-gray-800 min-h-screen flex flex-col">
+
+    <div class="max-w-7xl mx-auto px-4 pt-6 w-full">
+        <header class="bg-theme-dark text-white rounded-2xl py-4 px-8 flex justify-between items-center shadow-md">
+            <div class="flex items-center space-x-3">
+                <img src="../asset-image/logo.png" alt="GeoNiRisk Logo" class="w-10 h-10 object-contain">
+                <h1 class="text-2xl font-bold tracking-wide font-custom-geo text-white">GeoNiRisk - Secure Ingestion</h1>
+            </div>
+            <a href="index.html" class="flex items-center space-x-2 bg-gray-600 hover:bg-gray-500 text-white px-5 py-2 rounded-lg font-bold transition-colors">
+                <span>← Dashboard</span>
+            </a>
+        </header>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-4 py-12 w-full flex-grow flex flex-col">
+        
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-gray-900 mb-2">Initialize Data Pipeline</h2>
+            <p class="text-gray-600">Define the operational context before uploading raw data.</p>
+        </div>
+
+        <div class="bg-card-light rounded-2xl p-8 shadow-sm border border-gray-300 mb-8">
+            <h3 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-400 pb-2">1. Define Data Context</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Hackathon Theme</label>
+                    <select id="theme-select" class="w-full rounded-md border-gray-400 shadow-sm p-3 bg-white font-medium cursor-pointer">
+                        <option value="" disabled selected>-- Select Phase --</option>
+                        <option value="eksplorasi">Eksplorasi (Exploration)</option>
+                        <option value="penambangan">Penambangan (Mining)</option>
+                        <option value="pengolahan">Pengolahan Mineral (Processing)</option>
+                    </select>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Data Purpose</label>
+                    <select id="purpose-select" disabled class="w-full rounded-md border-gray-400 shadow-sm p-3 bg-gray-100 font-medium cursor-not-allowed transition-all">
+                        <option value="" disabled selected>-- Await Theme Selection --</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div id="upload-section" class="opacity-50 pointer-events-none transition-all duration-300">
+            <div class="flex justify-between items-end mb-3">
+                <h3 class="text-xl font-bold text-gray-900">2. Upload Dataset</h3>
+                <span id="allowed-badge" class="text-xs font-bold bg-gray-200 text-gray-600 px-3 py-1 rounded-full">Format: Restricted</span>
+            </div>
+
+            <div id="drop-zone" class="w-full bg-white border-4 border-dashed border-gray-300 rounded-3xl p-12 text-center transition-all duration-300 cursor-not-allowed">
+                <input type="file" id="file-input" class="hidden" multiple>
+                
+                <div class="flex flex-col items-center justify-center space-y-4 pointer-events-none">
+                    <svg id="drop-icon" class="w-16 h-16 text-gray-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                    <p id="drop-text" class="text-lg font-bold text-gray-400">Unlock parameters to upload</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="file-list-container" class="w-full mt-8 hidden">
+            <ul id="file-list" class="space-y-3 mb-6"></ul>
+            <button id="process-btn" class="w-full panel-gradient text-white font-bold py-4 rounded-xl shadow-md hover:opacity-90 transition-opacity flex justify-center items-center space-x-2">
+                <span id="btn-text">PROCESS CONTEXTUAL DATA</span>
+            </button>
+        </div>
+
+    </main>
+
+    <script src="upload_script.js"></script>
+</body>
+</html>
