@@ -1,0 +1,52 @@
+/* geo_styles.css */
+@font-face {
+    font-family: 'Neogen';
+    src: url('../Font/Neogen-Black-BF69fb4ec778a6d.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-custom-geo {
+    font-family: 'Neogen', sans-serif;
+}
+
+.bg-theme-dark { 
+    background-color: #146B65; 
+}
+
+/* Target File: geo_styles.css */
+
+/* --- Complex Dark Gradient Panel (Replaces previous glass effect) --- */
+.panel-gradient {
+    /* Stacked background for a "rame" yet professional look */
+    /* Target File: geo_styles.css */
+    background-image: 
+        radial-gradient(circle at 90% 10%, rgba(20, 107, 101, 0.25) 0%, transparent 50%), 
+        radial-gradient(circle at 10% 90%, rgba(255, 255, 255, 0.05) 0%, transparent 40%), 
+        linear-gradient(to bottom, #050505 0%, #111827 60%, #374151 100%); /* Flipped: Dark top to lighter bottom */
+    /* Heavy inner shadow to frame it */
+    box-shadow: inset 0px 0px 60px rgba(0, 0, 0, 0.7), 0 10px 25px rgba(0, 0, 0, 0.5);
+    
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    padding: 2rem;
+}
+
+/* Ensure you delete the .panel-gradient::after block from the previous step so it doesn't conflict! */
+
+/* Ensure all elements *directly inside* the relative panel are above the overlay */
+.panel-gradient > * {
+    position: relative; /* Re-establish z-index context */
+    z-index: 20; /* Place above the ::after overlay */
+}
+
+/* Ensure map popups stay styled */
+.leaflet-popup-content-wrapper {
+    border-radius: 8px;
+    font-family: inherit;
+    color: #1a202c;
+}

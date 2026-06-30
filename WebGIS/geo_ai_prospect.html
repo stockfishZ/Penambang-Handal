@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoNiRisk - Geological & AI Prospectivity</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="geo_styles.css">
+</head>
+<body class="bg-[#F8F9FA] font-sans text-gray-800 min-h-screen">
+
+    <div class="max-w-7xl mx-auto px-4 pt-6">
+        <header class="bg-theme-dark text-white rounded-2xl py-4 px-8 flex justify-between items-center shadow-md">
+            <div class="flex items-center space-x-3">
+                <img src="../asset-image/logo.png" alt="GeoNiRisk Logo" class="w-10 h-10 object-contain">
+                <h1 class="text-2xl font-bold tracking-wide font-custom-geo text-white">GeoNiRisk</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="#" class="hover:text-teal-200 transition">Input Data</a>
+                <a href="#" class="hover:text-teal-200 transition">Export Data</a>
+                <a href="#" class="hover:text-teal-200 transition">Edit Data</a>
+            </nav>
+        </header>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-6 bg-gray-200 rounded-lg border-2 border-gray-800 overflow-hidden min-h-[600px] relative z-0">
+            <div id="map" class="w-full h-full absolute inset-0"></div>
+        </div>
+
+        <div class="lg:col-span-6 flex flex-col relative rounded-2xl overflow-hidden shadow-2xl panel-gradient text-white p-8">
+            
+            <div class="flex items-center space-x-4 mb-2">
+                <a href="mainpage.html" class="bg-white text-gray-800 rounded-full p-2 hover:bg-gray-200 transition">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                </a>
+                <h2 class="text-4xl font-extrabold tracking-tight">Titik Bor #1</h2>
+            </div>
+            <h3 class="text-xl font-medium ml-14 mb-8">Geological & AI Prospectivity</h3>
+
+            <div class="space-y-4 mb-10 pl-2 pr-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-24 text-xs font-semibold leading-tight text-right">Iron Oxide<br>Index</div>
+                    <div class="flex-grow bg-gray-700/50 h-5 rounded-sm overflow-hidden">
+                        <div id="bar-iron" class="h-full bg-[#E89B35] transition-all duration-1000 ease-out w-0"></div>
+                    </div>
+                    <div id="val-iron" class="w-4 font-bold text-lg">0</div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="w-24 text-xs font-semibold leading-tight text-right">Clay Mineral<br>Index</div>
+                    <div class="flex-grow bg-gray-700/50 h-5 rounded-sm overflow-hidden">
+                        <div id="bar-clay" class="h-full bg-[#C13838] transition-all duration-1000 ease-out w-0"></div>
+                    </div>
+                    <div id="val-clay" class="w-4 font-bold text-lg">0</div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="w-24 text-xs font-semibold leading-tight text-right">Vegetation<br>Index</div>
+                    <div class="flex-grow bg-gray-700/50 h-5 rounded-sm overflow-hidden">
+                        <div id="bar-veg" class="h-full bg-[#00F396] transition-all duration-1000 ease-out w-0"></div>
+                    </div>
+                    <div id="val-veg" class="w-4 font-bold text-lg">0</div>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4 mb-4 pl-2 pr-6">
+                <div class="w-24 text-xs font-semibold leading-tight text-right">AI Confidence<br>Interval</div>
+                <div class="flex-grow relative h-3 bg-[#4A4A4A] rounded-sm">
+                    
+                    <div id="bar-conf" class="absolute h-full bg-white transition-all duration-1000 ease-out"></div>
+                    
+                    <div id="conf-labels-container" class="absolute w-full top-4 text-[10px] text-gray-300"></div>
+                </div>
+            </div>
+            <p id="conf-text" class="text-sm text-gray-300 text-left px-2 mb-10 mt-6 leading-tight">
+                Loading AI evaluation data...
+            </p>
+
+            <div class="mt-auto">
+                <div class="flex items-start space-x-4 mb-4">
+                    <div class="w-24 flex flex-col space-y-2 text-[10px] font-medium">
+                        <div class="flex items-center space-x-2"><div class="w-3 h-3 bg-[#A82828]"></div><span>Laterite</span></div>
+                        <div class="flex items-center space-x-2"><div class="w-3 h-3 bg-[#D37937]"></div><span>Saprolite</span></div>
+                        <div class="flex items-center space-x-2"><div class="w-3 h-3 bg-[#CD9554]"></div><span>Saprock</span></div>
+                        <div class="flex items-center space-x-2"><div class="w-3 h-3 bg-[#1A1A1A]"></div><span>Bedrock</span></div>
+                    </div>
+                    
+                    <div class="flex-grow relative">
+                        <div id="litho-container" class="w-full h-12 flex shadow-lg">
+                            <div id="litho-lat" class="bg-[#A82828] h-full flex items-center justify-center text-sm font-bold transition-all duration-1000 w-0 overflow-hidden"></div>
+                            <div id="litho-sap" class="bg-[#D37937] h-full flex items-center justify-center text-sm font-bold transition-all duration-1000 w-0 overflow-hidden"></div>
+                            <div id="litho-sapr" class="bg-[#CD9554] h-full flex items-center justify-center text-sm font-bold transition-all duration-1000 w-0 overflow-hidden text-white"></div>
+                            <div id="litho-bed" class="bg-[#1A1A1A] h-full flex items-center justify-center text-sm font-bold transition-all duration-1000 w-0 overflow-hidden text-white"></div>
+                        </div>
+                        <div id="depth-scale-container" class="relative w-full h-6 border-t border-white mt-1"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="geo_script.js"></script>
+    <script src="https://unpkg.com/georaster"></script>
+    <script src="https://unpkg.com/georaster-layer-for-leaflet"></script>
+</body>
+</html>

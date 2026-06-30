@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoNiRisk - ESG & K3</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="esg_styles.css">
+</head>
+<body class="bg-[#F8F9FA] font-sans text-gray-800 min-h-screen">
+
+    <div class="max-w-7xl mx-auto px-4 pt-6">
+        <header class="bg-theme-dark text-white rounded-2xl py-4 px-8 flex justify-between items-center shadow-md">
+            <div class="flex items-center space-x-3">
+                <img src="../asset-image/logo.png" alt="GeoNiRisk Logo" class="w-10 h-10 object-contain">
+                <h1 class="text-2xl font-bold tracking-wide font-custom-geo text-white">GeoNiRisk</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-lg font-medium">
+                <a href="#" class="hover:text-teal-200 transition">Input Data</a>
+                <a href="#" class="hover:text-teal-200 transition">Export Data</a>
+                <a href="#" class="hover:text-teal-200 transition">Edit Data</a>
+            </nav>
+        </header>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-6 bg-gray-200 rounded-lg border-2 border-gray-800 overflow-hidden min-h-[600px] relative z-0">
+            <div id="esg-map" class="w-full h-full absolute inset-0"></div>
+            
+            <div id="map-legend" class="absolute top-4 right-4 z-[400] bg-white p-4 rounded-lg shadow-md text-xs w-64 opacity-95">
+                <h4 class="font-bold text-gray-900 mb-1">Kawasan Hutan (Desember 2025)</h4>
+                <p class="text-gray-500 text-[10px] mb-3">KWSHUTAN_AR_250K_122025</p>
+                <div class="space-y-1.5" id="map-legend-items">
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-purple-500"></span><span>Kawasan Konservasi</span></div>
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-green-600"></span><span>Hutan Lindung</span></div>
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-yellow-400"></span><span>Hutan Produksi Tetap</span></div>
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-green-400"></span><span>Hutan Produksi Terbatas</span></div>
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-pink-400"></span><span>Hutan Produksi Konversi</span></div>
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-white border border-gray-300"></span><span>Area Penggunaan Lain</span></div>
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-blue-500"></span><span>Tubuh Air</span></div>
+                    <div class="flex items-center space-x-2"><span class="w-3 h-3 bg-red-500"></span><span>Tidak Terdefinisi</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-6 panel-gradient shadow-xl">
+            
+            <div class="flex-grow flex flex-col mb-4 z-30">
+                <div class="flex items-center space-x-4 mb-2">
+                    <a href="mainpage.html" class="p-2 bg-white/20 hover:bg-white/40 rounded-full transition-colors cursor-pointer text-white">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    </a>
+                    <h2 class="text-4xl font-extrabold tracking-tight" id="titik-name">Titik Bor #1</h2>
+                </div>
+                <h3 class="text-xl font-semibold mb-8 ml-14">ESG & K3</h3>
+
+                <div class="flex items-center justify-between mb-8 px-2">
+                    <div class="flex flex-col flex-1 items-center text-center">
+                        <div class="flex items-center space-x-3 mb-1">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S12 3 12 3s-4.5 4.97-4.5 9 2.015 9 4.5 9z"></path></svg>
+                            <span class="text-4xl font-bold" id="dist-water">33 km</span>
+                        </div>
+                        <p class="text-xs text-gray-300">Jarak dari Titik Bor #1<br>ke titik air terdekat</p>
+                    </div>
+                    
+                    <div class="w-px h-16 bg-white/30 mx-2"></div>
+                    
+                    <div class="flex flex-col flex-1 items-center text-center">
+                        <div class="flex items-center space-x-3 mb-1">
+                            <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"></path></svg>
+                            <span class="text-4xl font-bold" id="dist-settlement">20 km</span>
+                        </div>
+                        <p class="text-xs text-gray-300">Jarak dari Titik Bor #1<br>ke pemukiman terdekat</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-row items-center justify-center gap-6 flex-grow">
+                    <div class="w-40 h-40 relative flex-shrink-0 bg-white/10 rounded-full p-2">
+                        <canvas id="esgPieChart"></canvas>
+                    </div>
+                    
+                    <div id="custom-legend" class="flex flex-col justify-center space-y-3 max-h-40 overflow-y-auto pr-2 w-1/2 custom-scrollbar">
+                        </div>
+                </div>
+            </div>
+
+            <div class="bg-card-light text-gray-900 rounded-2xl p-5 shadow-inner z-30">
+    <h4 class="font-bold text-lg mb-3">Safety Hazards</h4>
+    
+                <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-gray-400 text-xs">
+                    
+                    <div class="space-y-2 pr-4">
+                        <div class="flex justify-between"><span class="font-medium">Probabilitas Longsor:</span> <span class="font-bold text-red-600" id="haz-longsor">HIGH</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Average point slope:</span> <span class="font-bold" id="haz-slope">25°</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Clay Index:</span> <span class="font-bold" id="haz-clay">5</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Vegetation Index:</span> <span class="font-bold" id="haz-veg">4</span></div>
+                    </div>
+                    
+                    <div class="space-y-2 px-4">
+                        <div class="flex justify-between"><span class="font-medium">Probabilitas Banjir:</span> <span class="font-bold text-green-600" id="haz-banjir">LOW</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Elevasi Relatif:</span> <span class="font-bold" id="haz-elev">20m</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Jarak Sungai:</span> <span class="font-bold" id="haz-sungai">11km</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Orde Sungai:</span> <span class="font-bold" id="haz-orde">4</span></div>
+                    </div>
+                    
+                    <div class="space-y-2 pl-4">
+                        <div class="flex justify-between"><span class="font-medium">Estimasi Waktu Evakuasi:</span> <span class="font-bold" id="haz-evak-time">>4 Jam</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Jarak ke jalan raya:</span> <span class="font-bold" id="haz-evak-dist">50km</span></div>
+                        <div class="flex justify-between"><span class="font-medium">Slope jalur evakuasi:</span> <span class="font-bold" id="haz-evak-slope">25°</span></div>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="esg_script.js"></script>
+</body>
+</html>
